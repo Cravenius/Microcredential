@@ -19,13 +19,22 @@ def predict():
     final_features = [np.array(int_features)]
     prediction = model.predict(final_features)
 
-    result = ""
-    if prediction == 1:
-      result = 'Berdasarkan record tersebut, orang yang bersangkutan sudah meninggal'
-    else:
-      result = 'Berdasarkan record tersebut, orang yang bersangkutan tidak meninggal'
+    data = {}
+    data['age'] = request.form['age'].value
+    data['creatinine_phosphokinase'] = request.form['creatinine_phosphokinase'].value
+    data['ejection_fraction'] = request.form['ejection_fraction'].value
+    data['serum_creatinine'] = request.form['serum_creatinine'].value
+    data['time'] = request.form['time'].value
 
-    return render_template('index.html', prediction_text='{}'.format(result))
+    if prediction == 1:
+      data['status'] = "Meninggal"
+      data['result'] = 'Berdasarkan record tersebut, orang yang bersangkutan sudah meninggal'
+    else:
+      data['status'] = "Hidup"
+      data['result'] = 'Berdasarkan record tersebut, orang yang bersangkutan tidak meninggal'
+
+    #return render_template('index.html', prediction_text='{}'.format(result))
+    return render_template('index.html', **data)
 
 
 if __name__ == "__main__":
