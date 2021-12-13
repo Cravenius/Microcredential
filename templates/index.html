@@ -1,43 +1,141 @@
 <!DOCTYPE html>
-<html >
-<!--From https://codepen.io/frytyler/pen/EGdtg-->
-<head>
-  <meta charset="UTF-8">
-  <title>Iris API</title>
-  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
-<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
-  
-</head>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+            rel="stylesheet"
+        />
+        <title>Project Kelompok 5 Telu-01</title>
+    </head>
+    <body
+        class="
+            flex flex-col
+            justify-between
+            item-center
+            p-8
+            min-h-screen
+            bg-gradient-to-r
+            from-green-400
+            to-blue-500
+            text-gray-800
+            md:flex-row
+        "
+    >
+        <main class="bg-white p-16 rounded-lg">
+            <h1 class="text-3xl font-bold mb-8">
+                Prediksi Kematian disebabkan oleh Gagal Jantung:
+            </h1>
 
-<body>
- <div class="login">
-	<h1>Predict Iris</h1>
+            <form
+                action="{{ url_for('predict') }}"
+                method="post"
+                class="flex flex-col"
+            >
+                <label for="age" class="mb-2">Usia</label>
+                <input
+                    type="text"
+                    name="age"
+                    placeholder="Usia"
+                    required="required"
+                    class="p-4 bg-gray-100 rounded-md"
+                />
 
-  <!--
-  age = float(input("Umur anda (dalam angka): "))
-  cpk = float(input("Kadar enzim CPK (dalam angka): "))
-  ef = float(input("Persentase kadar darah yang dipompa keluar jantung (dalam persen): "))
-  sc = float(input("Kadar creatinine dalam darah (dalam mg/dL): "))
-  time = int(input("Periode follow up (dalam hari): "))
+                <label for="creatinine_phosphokinase" class="mt-4 mb-2"
+                    >Kadar Enzim cpk (dalam angka)</label
+                >
+                <input
+                    type="text"
+                    name="creatinine_phosphokinase"
+                    placeholder=""
+                    required="required"
+                    class="p-4 bg-gray-100 rounded-md"
+                />
 
-      Main Input For Receiving Query to our ML -->
-    <form action="{{ url_for('predict')}}"method="post">
-    	<input type="text" name="age" placeholder="Age" required="required" />
-      <input type="text" name="creatinine_phosphokinase" placeholder="Creatinine Phosphokinase" required="required" />
-		  <input type="text" name="ejection_fraction" placeholder="Ejection Fraction" required="required" />
-      <input type="text" name="serum_creatinine" placeholder="Serum Creatinine" required="required" />
-      <input type="text" name="time" placeholder="Time" required="required" />
-      <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
-    </form>
+                <label for="ejection_fraction" class="mt-4 mb-2">Persentase Kadar Darah(dalam %)</label>
+                <input
+                    type="text"
+                    name="ejection_fraction"
+                    placeholder=""
+                    required="required"
+                    class="p-4 bg-gray-100 rounded-md"
+                />
 
-   <br>
-   <br>
-   {{ prediction_text }}
+                <label for="serum_creatinine" class="mt-4 mb-2">Kadar Kreatinin dalam Darah (mg/dl)</label>
+                <input
+                    type="text"
+                    name="serum_creatinine"
+                    placeholder=""
+                    required="required"
+                    class="p-4 bg-gray-100 rounded-md"
+                />
 
- </div>
+                <label for="time" class="mt-4 mb-2">Periode follow up (dalam hari)</label>
+                <input
+                    type="text"
+                    name="time"
+                    placeholder=""
+                    required="required"
+                    class="p-4 bg-gray-100 rounded-md"
+                />
 
 
-</body>
+
+                <button
+                    type="submit"
+                    class="
+                        flex
+                        justify-center
+                        align-center
+                        mt-8
+                        p-4
+                        bg-gradient-to-r
+                        from-green-400
+                        to-blue-500
+                        text-white
+                        rounded-md
+                    "
+                >
+                    PREDIKSI SEKARANG
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="feather feather-arrow-right ml-4"
+                    >
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </button>
+            </form>
+        </main>
+        <section class="mt-8 h-full flex-auto rounded-lg md:mt-0 md:ml-8">
+            <div class="bg-white p-16 rounded-lg">
+                <h1 class="text-2xl mb-8">
+                    Hasil Prediksi :
+                </h1>
+                <h3 class="text-5xl font-bold">Status Mortalitas</h3>
+                <div class="mt-8">
+                    <p>Usia: {{ age }} tahun</p>
+                    <p>Kadar Enzim cpk (dalam angka): {{ creatinine_phosphokinase }}</p>
+                    <p>Persentase Kadar Darah(dalam %): {{ ejection_fraction }}</p>
+                    <p>Kadar Kreatinin dalam Darah : {{ serum_creatinine }} mg/dl</p>
+                    <p>Periode follow up (dalam hari) : {{ time }}</p>
+                </div>
+
+                <div class="mt-8-2">
+                    <p>{{ prediction_text }}<p>
+                </div>
+            </div>
+            </div>
+        </section>
+    </body>
 </html>
