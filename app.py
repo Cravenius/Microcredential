@@ -9,14 +9,7 @@ model = pickle.load(open('modelRF.pkl', 'rb'))
 def home():
     return render_template('index.html')
 
-@app.route('/predict',methods=['POST'])
-
-def output_string(output):
-    if output == 1:
-        return 'Berdasarkan record tersebut, orang yang bersangkutan sudah meninggal'
-    else:
-    	return 'Berdasarkan record tersebut, orang yang bersangkutan tidak meninggal'
-
+@app.route('/predict',methods=['GET', 'POST'])
 def predict():
     '''
     For rendering results on HTML GUI
@@ -25,9 +18,13 @@ def predict():
     final_features = [np.array(int_features)]
     prediction = model.predict(final_features)
 
-    result = output_string(prediction)
+    result = ""
+    if prediction == 1:
+      result = 'Berdasarkan record tersebut, orang yang bersangkutan sudah meninggal'
+    else:
+      result = 'Berdasarkan record tersebut, orang yang bersangkutan tidak meninggal'
 
-    return render_template('index.html', prediction_text='The predicted iris flower is {}'.format(result))
+    return render_template('index.html', prediction_text='{}'.format(result))
 
 
 if __name__ == "__main__":
