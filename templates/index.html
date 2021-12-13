@@ -9,6 +9,14 @@
             rel="stylesheet"
         />
         <title>Project Kelompok 5 Telu-01</title>
+
+        <script>
+            var age = document.getElementById('age').value;
+            var creatinine_phosphokinase = document.getElementById('age').value;
+            var ejection_fraction = document.getElementById('age').value;
+            var serum_creatinine = document.getElementById('age').value;
+            var time = document.getElementById('age').value;
+        </script>
     </head>
     <body
         class="
@@ -33,6 +41,7 @@
                 action="{{ url_for('predict') }}"
                 method="post"
                 class="flex flex-col"
+                fuc
             >
                 <label for="age" class="mb-2">Usia</label>
                 <input
