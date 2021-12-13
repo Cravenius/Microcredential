@@ -28,10 +28,10 @@ def predict():
 
     if prediction == 1:
       data['status'] = "Meninggal"
-      data['result'] = 'Berdasarkan record tersebut, orang yang bersangkutan sudah meninggal'
+      data['prediction_text'] = 'Berdasarkan record tersebut, orang yang bersangkutan sudah meninggal'
     else:
       data['status'] = "Hidup"
-      data['result'] = 'Berdasarkan record tersebut, orang yang bersangkutan tidak meninggal'
+      data['prediction_text'] = 'Berdasarkan record tersebut, orang yang bersangkutan tidak meninggal'
 
     #return render_template('index.html', prediction_text='{}'.format(result))
     return render_template('index.html', **data)
