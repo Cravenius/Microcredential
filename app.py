@@ -21,9 +21,9 @@ def predict():
     result = ""
     
     if prediction == 1:
-      result = 'Berdasarkan record tersebut, orang yang bersangkutan sudah meninggal'
+      result = 'Akan meninggal karena gagal jantung'
     else:
-      result = 'Berdasarkan record tersebut, orang yang bersangkutan tidak meninggal'
+      result = 'Tidak akan Meninggal karena gagal jantung'
 
     return render_template('index.html', prediction_text='{}'.format(result))
 
